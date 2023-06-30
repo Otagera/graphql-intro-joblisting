@@ -20,11 +20,16 @@ export const useJob = (id) => {
 	return { job: data?.job, loading, error: Boolean(error) };
 };
 
-export const useJobs = () => {
+export const useJobs = (limit = 10, offset = 0) => {
 	const { data, loading, error } = useQuery(jobsQuery, {
 		fetchPolicy: "network-only",
+		variables: { limit, offset },
 	});
-	return { jobs: data?.jobs, loading, error: Boolean(error) };
+	return {
+		jobs: data?.jobs,
+		loading,
+		error: Boolean(error),
+	};
 };
 
 export const useCreateJob = () => {
