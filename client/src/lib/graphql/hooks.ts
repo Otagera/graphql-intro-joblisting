@@ -6,21 +6,21 @@ import {
 	createJobMutation,
 } from "./queries";
 
-export const useCompany = (id) => {
+export const useCompany = (id: string) => {
 	const { data, loading, error } = useQuery(companyByIdQuery, {
 		variables: { id },
 	});
 	return { company: data?.company, loading, error: Boolean(error) };
 };
 
-export const useJob = (id) => {
+export const useJob = (id: string) => {
 	const { data, loading, error } = useQuery(jobByIdQuery, {
 		variables: { id },
 	});
 	return { job: data?.job, loading, error: Boolean(error) };
 };
 
-export const useJobs = (limit = 10, offset = 0) => {
+export const useJobs = (limit: number = 10, offset: number = 0) => {
 	const { data, loading, error } = useQuery(jobsQuery, {
 		fetchPolicy: "network-only",
 		variables: { limit, offset },
@@ -34,7 +34,7 @@ export const useJobs = (limit = 10, offset = 0) => {
 
 export const useCreateJob = () => {
 	const [mutate, { loading }] = useMutation(createJobMutation);
-	const createJob = async (title, description) => {
+	const createJob = async (title: string, description?: string) => {
 		const {
 			data: { job },
 		} = await mutate({

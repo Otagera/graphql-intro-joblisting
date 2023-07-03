@@ -82,14 +82,14 @@ export const resolvers = {
 	},
 };
 
-const notFoundError = (message) =>
+const notFoundError = (message: string) =>
 	new GraphQLError(message, {
 		extensions: { code: "NOT_FOUND" },
 	});
 
-const unauthorizedError = (message) =>
+const unauthorizedError = (message: string) =>
 	new GraphQLError(message, {
 		extensions: { code: "UNAUTHORIZED" },
 	});
 
-const toISOString = (value) => value.slice(0, "yyyy-mm-dd".length);
+const toISOString = (value: string) => value.slice(0, "yyyy-mm-dd".length);

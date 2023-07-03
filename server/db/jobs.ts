@@ -1,14 +1,15 @@
 import { connection } from "./connection.js";
 import { generateId } from "./ids.js";
+import { JobEntity } from "./types.js";
 
-const getJobTable = () => connection.table("job");
+const getJobTable = () => connection.table<JobEntity>("job");
 
 export const countJobs = async () => {
-	const { count } = await getJobTable().first().count(" * as count");
-	return count;
+	const { count } = await getJobTable().first().count("*", { as: "count" });
+	return count as number;
 };
 
-export async function getJobs(limit, offset) {
+export async function getJobs(limit: number, offset: number) {
 	const query = getJobTable().select().orderBy("createdAt", "desc");
 	if (limit) {
 		query.limit(limit);
@@ -19,15 +20,21 @@ export async function getJobs(limit, offset) {
 	return await query;
 }
 
-export async function getJobsByCompany(companyId) {
+export async function getJobsByCompany(companyId: string) {
 	return await getJobTable().select().where({ companyId });
 }
 
-export async function getJob(id) {
+export async function getJob(id: string) {
 	return await getJobTable().first().where({ id });
 }
 
-export async function createJob({ companyId, title, description }) {
+type CreateJobOptions = Pick<JobEntity, "companyId" | "title" | "description">;
+
+export async function createJob({
+	companyId,
+	title,
+	description,
+}: CreateJobOptions) {
 	const job = {
 		id: generateId(),
 		companyId,
@@ -39,7 +46,7 @@ export async function createJob({ companyId, title, description }) {
 	return job;
 }
 
-export async function deleteJob(id, companyId) {
+export async function deleteJob(id: string, companyId: string) {
 	const job = await getJobTable().first().where({ id, companyId });
 	if (!job) {
 		return null;
@@ -48,12 +55,22 @@ export async function deleteJob(id, companyId) {
 	return job;
 }
 
-export async function updateJob({ id, companyId, title, description }) {
+type UpdateJobOptions = Pick<
+	JobEntity,
+	"id" | "companyId" | "title" | "description"
+>;
+
+export async function updateJob({
+	id,
+	companyId,
+	title,
+	description,
+}: UpdateJobOptions) {
 	const job = await getJobTable().first().where({ id, companyId });
 	if (!job) {
 		throw new Error(`Job not found: ${id}`);
 	}
 	const updatedFields = { title, description };
 	await getJobTable().update(updatedFields).where({ id });
-	return { ...job, ...updatedFields };
+	return { ...job, ...updatedFields } as JobEntity;
 }

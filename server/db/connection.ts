@@ -1,4 +1,5 @@
-import knex from "knex";
+import pkg from "knex";
+const { knex } = pkg;
 
 export const connection = knex({
 	client: "better-sqlite3",
