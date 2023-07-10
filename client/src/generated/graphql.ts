@@ -91,14 +91,14 @@ export type UpdateJobInput = {
   title: Scalars['String']['input'];
 };
 
-export type JobDetailFragment = { id: string, date: string, title: string, description?: string | null, company: { id: string, name: string } } & { ' $fragmentName'?: 'JobDetailFragment' };
+export type JobDetailFragment = { id: string, date: string, title: string, description?: string | null, company: { id: string, name: string } };
 
 export type GetJobQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetJobQuery = { job?: { ' $fragmentRefs'?: { 'JobDetailFragment': JobDetailFragment } } | null };
+export type GetJobQuery = { job?: { id: string, date: string, title: string, description?: string | null, company: { id: string, name: string } } | null };
 
 export type JobsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -106,7 +106,7 @@ export type JobsQueryVariables = Exact<{
 }>;
 
 
-export type JobsQuery = { jobs?: { totalCount: number, items?: Array<{ ' $fragmentRefs'?: { 'JobDetailFragment': JobDetailFragment } }> | null } | null };
+export type JobsQuery = { jobs?: { totalCount: number, items?: Array<{ id: string, date: string, title: string, description?: string | null, company: { id: string, name: string } }> | null } | null };
 
 export type CompanyByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -120,7 +120,7 @@ export type CreateJobMutationVariables = Exact<{
 }>;
 
 
-export type CreateJobMutation = { job?: { ' $fragmentRefs'?: { 'JobDetailFragment': JobDetailFragment } } | null };
+export type CreateJobMutation = { job?: { id: string, date: string, title: string, description?: string | null, company: { id: string, name: string } } | null };
 
 export const JobDetailFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"JobDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Job"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<JobDetailFragment, unknown>;
 export const GetJobDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetJob"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"job"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"JobDetail"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"JobDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Job"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"company"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetJobQuery, GetJobQueryVariables>;
