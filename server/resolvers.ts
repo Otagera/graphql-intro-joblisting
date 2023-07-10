@@ -1,3 +1,4 @@
+import DataLoader from "dataloader";
 import { GraphQLError } from "graphql";
 import { getCompany } from "./db/companies.js";
 import {
@@ -9,8 +10,15 @@ import {
 	getJobsByCompany,
 	updateJob,
 } from "./db/jobs.js";
+import { Resolvers } from "./generated/graphql.js";
+import { CompanyEntity, UserEntity } from "./db/types.js";
 
-export const resolvers = {
+export interface ResolverContext {
+	companyLoader: DataLoader<string, CompanyEntity, string>;
+	user?: UserEntity;
+}
+
+export const resolvers: Resolvers = {
 	Query: {
 		company: async (_root, { id }) => {
 			const company = await getCompany(id);
